@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DURGA PUJA SAMITI SOMBARIHATPARA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        festiveRed: '#8B0000',
+                        deepCrimson: '#600000',
+                        festiveGold: '#D4AF37',
+                        lightGold: '#F9E8A2',
+                        darkGold: '#AA7C11',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .festive-title { font-family: 'Cinzel', serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 3px; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col selection:bg-festiveGold selection:text-deepCrimson">
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdo4Bko0Eudr-X1Cgvbo4R9AwSVjyuV7EvnfH28TtYEgEF1yWFS-RDRAjvCZ3EKo_kKA/exec';
+
+        const DEFAULT_USERS = [
+            { id: 'usr_1', username: 'admin', password: 'admin123', name: 'Samiti Master Admin', phone: '9876543210', role: 'ADMIN', photo: 'https://placehold.co/150x150/8B0000/D4AF37?text=Admin', status: 'Active' },
+            { id: 'usr_2', username: 'coleader', password: 'pass123', name: 'Ramesh Kumar (Cashier)', phone: '9123456789', role: 'CO-LEADER', photo: 'https://placehold.co/150x150/600000/F9E8A2?text=CL', status: 'Active' },
+            { id: 'usr_3', username: 'leader', password: 'pass123', name: 'Suresh Mandal (Head)', phone: '9988776655', role: 'LEADER', photo: 'https://placehold.co/150x150/AA7C11/FFFFFF?text=L', status: 'Active' },
+            { id: 'usr_4', username: 'member', password: 'pass123', name: 'Village Member', phone: '9811223344', role: 'MEMBER', photo: 'https://placehold.co/150x150/333333/FFFFFF?text=M', status: 'Active' }
+        ];
+
+        const STORAGE_KEYS = {
+            USERS: 'dp_users_v2',
+            CURRENT_USER: 'dp_current_user_v2',
+            CHANDA: 'dp_chanda_v2',
+            KHARCH: 'dp_kharch_v2',
+            DEPOSIT: 'dp_deposit_v2',
+            TRASH: 'dp_trash_v2',
+            VILLAGES: 'dp_villages_v2',
+            NOTICE: 'dp_notice_v2',
+            OLD_CHANDA: 'dp_old_chanda_2025',
+            ACTIVITY: 'dp_activity_v2',
+            SYNC_QUEUE: 'dp_sync_queue_v2'
+        };
+
+        const NEW_VILLAGES_LIST = [
+            'Sombari Hat', 'Hareramtola', 'Khaditola', 'Mirjanagar', 'Bintola', 
+            'Bhagat Toli', 'Kachhari', 'Pakija More', 'Mistritola'
+        ];
+
+        const OLD_CHANDA_DATA_2025 = [
+            { name: "kaushalya chandra singh", village: "Hareramtola", amount: 251 },
+            { name: "vikas mandal", village: "Hareramtola", amount: 205 },
+            { name: "vinod rajak", village: "Hareramtola", amount: 205 },
+            { name: "anand ghosh", village: "Hareramtola", amount: 101 },
+            { name: "mukad mandal", village: "Hareramtola", amount: 102 },
+            { name: "tara ghosh", village: "Hareramtola", amount: 105 },
+            { name: "bharat karmakar", village: "Hareramtola", amount: 220 },
+            { name: "munmuni das", village: "Hareramtola", amount: 105 },
+            { name: "dinesh rappak", village: "Hareramtola", amount: 110 },
+            { name: "jyotin ghosh", village: "Hareramtola", amount: 151 },
+            { name: "lakshman swarnakar", village: "Hareramtola", amount: 50 },
+            { name: "vijay swarnakar", village: "Hareramtola", amount: 50 },
+            { name: "manoj mahato", village: "Hareramtola", amount: 100 },
+            { name: "noresh mandal", village: "Hareramtola", amount: 100 },
+            { name: "montu ghosh", village: "Hareramtola", amount: 102 },
+            { name: "satto rajak", village: "Hareramtola", amount: 102 },
+            { name: "chakku mandal", village: "Hareramtola", amount: 150 },
+            { name: "sudhen ghosh", village: "Hareramtola", amount: 1001 },
+            { name: "pakal mandal", village: "Hareramtola", amount: 210 },
+            { name: "bicky mandal", village: "Hareramtola", amount: 200 },
+            { name: "sosin ghosh", village: "Hareramtola", amount: 55 },
+            { name: "romen mandal", village: "Hareramtola", amount: 150 },
+            { name: "arun mandal", village: "Hareramtola", amount: 501 },
+            { name: "bhondu rajak", village: "Hareramtola", amount: 105 },
+            { name: "suresh ghosh", village: "Hareramtola", amount: 55 },
+            { name: "vikash rajak", village: "Hareramtola", amount: 100 },
+            { name: "ashu ghosh", village: "Hareramtola", amount: 151 },
+            { name: "kundan gupta", village: "Hareramtola", amount: 3001 },
+            { name: "dhanny rajak", village: "Hareramtola", amount: 1001 },
+            { name: "sanjay mandal", village: "Hareramtola", amount: 501 },
+            { name: "sanjay yadav", village: "Hareramtola", amount: 2001 },
+            { name: "madhusudan ghosh", village: "Hareramtola", amount: 501 },
+            { name: "prabhas ghosh", village: "Hareramtola", amount: 2500 },
+            { name: "nakul rajak", village: "Hareramtola", amount: 1001 },
+            { name: "jichhu mandal", village: "Hareramtola", amount: 1500 },
+            { name: "subol ghosh", village: "Hareramtola", amount: 102 },
+            { name: "santosh mahato", village: "Hareramtola", amount: 1000 },
+            { name: "shirish mandal", village: "Hareramtola", amount: 201 },
+            { name: "sanatan karmakar", village: "Hareramtola", amount: 301 },
+            { name: "dhanraj ghosh", village: "Hareramtola", amount: 250 },
+            { name: "banu mandal", village: "Hareramtola", amount: 100 },
+            { name: "ramu rajak", village: "Hareramtola", amount: 100 },
+            { name: "nitant ravidas", village: "Hareramtola", amount: 100 },
+            { name: "suman mahato", village: "Hareramtola", amount: 155 },
+            { name: "uttam mandal", village: "Hareramtola", amount: 100 },
+            { name: "sulesh ghosh", village: "Hareramtola", amount: 105 },
+            { name: "vinod karmakar", village: "Hareramtola", amount: 105 },
+            { name: "santosh sharma", village: "Hareramtola", amount: 100 },
+            { name: "prakash rajak", village: "Hareramtola", amount: 100 },
+            { name: "chakku rajak", village: "Hareramtola", amount: 200 },
+            { name: "sonu mandal", village: "Hareramtola", amount: 51 },
+            { name: "nimay rajak", village: "Hareramtola", amount: 101 },
+            { name: "sunny mandal", village: "Hareramtola", amount: 100 },
+            { name: "nikhil ghosh", village: "Hareramtola", amount: 51 },
+            { name: "gorrango mandal", village: "Khaditola", amount: 220 },
+            { name: "sanatan mandal", village: "Khaditola", amount: 51 },
+            { name: "khomesh mandal", village: "Khaditola", amount: 100 },
+            { name: "vikram mandal", village: "Khaditola", amount: 105 },
+            { name: "pinku mandal", village: "Khaditola", amount: 205 },
+            { name: "khudir das", village: "Khaditola", amount: 50 },
+            { name: "bapi kumar", village: "Khaditola", amount: 50 },
+            { name: "fekan mandal", village: "Khaditola", amount: 50 },
+            { name: "bhudev mandal", village: "Khaditola", amount: 100 },
+            { name: "niku mandal", village: "Khaditola", amount: 55 },
+            { name: "nagardip mandal", village: "Khaditola", amount: 100 },
+            { name: "sakaldev mandal", village: "Khaditola", amount: 150 },
+            { name: "ravi mandal", village: "Khaditola", amount: 51 },
+            { name: "mithun mandal", village: "Khaditola", amount: 100 },
+            { name: "gopal mandal", village: "Khaditola", amount: 50 },
+            { name: "pran mandal", village: "Khaditola", amount: 50 },
+            { name: "ratan mandal", village: "Khaditola", amount: 30 },
+            { name: "amit mandal", village: "Khaditola", amount: 52 },
+            { name: "pratima devi", village: "Khaditola", amount: 150 },
+            { name: "vairnath mandal", village: "Khaditola", amount: 100 },
+            { name: "rajkumar mandal", village: "Khaditola", amount: 102 },
+            { name: "shubham mandal", village: "Khaditola", amount: 160 },
+            { name: "vaidyanath mandal", village: "Khaditola", amount: 100 },
+            { name: "rajesh mandal", village: "Khaditola", amount: 110 },
+            { name: "abhilash mandal", village: "Khaditola", amount: 1000 },
+            { name: "suchit mandal", village: "Khaditola", amount: 100 },
+            { name: "lakhvi chand mandal", village: "Mirjanagar", amount: 72 },
+            { name: "arjun mandal", village: "Mirjanagar", amount: 350 },
+            { name: "ajit mandal", village: "Mirjanagar", amount: 151 },
+            { name: "viren mandal", village: "Mirjanagar", amount: 110 },
+            { name: "nivaran mandal", village: "Mirjanagar", amount: 251 },
+            { name: "fekan ghosh", village: "Mirjanagar", amount: 211 },
+            { name: "manish mandal", village: "Mirjanagar", amount: 202 },
+            { name: "dhiren mandal", village: "Mirjanagar", amount: 110 },
+            { name: "balram mandal", village: "Mirjanagar", amount: 202 },
+            { name: "nokesh sarkar", village: "Mirjanagar", amount: 205 },
+            { name: "tinku mandal", village: "Mirjanagar", amount: 111 },
+            { name: "tapan jha", village: "Mirjanagar", amount: 550 },
+            { name: "om प्रकाश mandal", village: "Mirjanagar", amount: 205 },
+            { name: "munilal mandal", village: "Mirjanagar", amount: 200 },
+            { name: "satkudi mandal", village: "Mirjanagar", amount: 41 },
+            { name: "kishni mandal", village: "Mirjanagar", amount: 50 },
+            { name: "kailash mandal", village: "Mirjanagar", amount: 100 },
+            { name: "harivol mandal", village: "Mirjanagar", amount: 100 },
+            { name: "bechen mandal", village: "Mirjanagar", amount: 110 },
+            { name: "suchin mandal", village: "Mirjanagar", amount: 151 },
+            { name: "namo mandal", village: "Mirjanagar", amount: 100 },
+            { name: "bhim mandal", village: "Mirjanagar", amount: 210 },
+            { name: "nokul mandal", village: "Mirjanagar", amount: 100 },
+            { name: "sukumar ghosh", village: "Mirjanagar", amount: 100 },
+            { name: "karan ghosh", village: "Mirjanagar", amount: 100 },
+            { name: "lakkhi mandal", village: "Mirjanagar", amount: 50 },
+            { name: "sanjeev mandal", village: "Mirjanagar", amount: 55 },
+            { name: "ashok mandal", village: "Mirjanagar", amount: 500 },
+            { name: "sukesh mandal", village: "Mirjanagar", amount: 150 },
+            { name: "prakash mandal", village: "Mirjanagar", amount: 100 },
+            { name: "anku mandal", village: "Mirjanagar", amount: 150 },
+            { name: "vifal mandal", village: "Mirjanagar", amount: 200 },
+            { name: "ram lakhan mandal", village: "Mirjanagar", amount: 102 },
+            { name: "shankar mandal", village: "Mirjanagar", amount: 50 },
+            { name: "bharat das", village: "Mirjanagar", amount: 3001 },
+            { name: "babloo mandal", village: "Mirjanagar", amount: 150 },
+            { name: "khadir ray", village: "Mirjanagar", amount: 100 },
+            { name: "chedan mandal", village: "Mirjanagar", amount: 101 },
+            { name: "deven mandal", village: "Mirjanagar", amount: 101 },
+            { name: "anil mandal", village: "Mirjanagar", amount: 100 },
+            { name: "guddi kumar", village: "Mirjanagar", amount: 50 },
+            { name: "topensh mandal", village: "Mirjanagar", amount: 160 },
+            { name: "vishnu mandal", village: "Mirjanagar", amount: 251 },
+            { name: "sanjeev ray", village: "Somvari Hat", amount: 520 },
+            { name: "rajkumar sarkar", village: "Somvari Hat", amount: 5005 },
+            { name: "gautam sarkar", village: "Somvari Hat", amount: 201 },
+            { name: "swapna sarkar", village: "Somvari Hat", amount: 511 },
+            { name: "manish kumar mandal", village: "Somvari Hat", amount: 202 },
+            { name: "prabhat sarkar", village: "Somvari Hat", amount: 104 },
+            { name: "manav ray", village: "Somvari Hat", amount: 310 },
+            { name: "madhu swarnakar", village: "Somvari Hat", amount: 501 },
+            { name: "govind rajak", village: "Somvari Hat", amount: 505 },
+            { name: "nirmala devi", village: "Somvari Hat", amount: 21 },
+            { name: "tinku sarkar", village: "Somvari Hat", amount: 501 },
+            { name: "chaitu ray", village: "Somvari Hat", amount: 300 },
+            { name: "nimay sarkar", village: "Somvari Hat", amount: 505 },
+            { name: "gautam ray", village: "Somvari Hat", amount: 1002 },
+            { name: "annapurna jha", village: "Somvari Hat", amount: 105 },
+            { name: "bharti ray", village: "Somvari Hat", amount: 211 },
+            { name: "pulchandra rajak", village: "Somvari Hat", amount: 521 },
+            { name: "vikash sarkar", village: "Somvari Hat", amount: 501 },
+            { name: "rohit mandal", village: "Somvari Hat", amount: 1001 },
+            { name: "manoj sarkar", village: "Somvari Hat", amount: 501 },
+            { name: "raju jha", village: "Somvari Hat", amount: 1001 },
+            { name: "kishore swarnakar", village: "Somvari Hat", amount: 700 },
+            { name: "shiva swarnakar", village: "Somvari Hat", amount: 1100 },
+            { name: "jyoti sarkar", village: "Somvari Hat", amount: 411 },
+            { name: "ashok swarnakar", village: "Somvari Hat", amount: 3005 },
+            { name: "vishu ray", village: "Somvari Hat", amount: 551 },
+            { name: "tariq rajak", village: "Somvari Hat", amount: 1010 },
+            { name: "praveen sarkar", village: "Somvari Hat", amount: 1100 },
+            { name: "arun sarkar", village: "Somvari Hat", amount: 1002 },
+            { name: "santosh mandal", village: "Somvari Hat", amount: 501 },
+            { name: "pran sarkar", village: "Somvari Hat", amount: 102 },
+            { name: "ratan ray", village: "Somvari Hat", amount: 500 },
+            { name: "prakash ray", village: "Somvari Hat", amount: 301 },
+            { name: "suphal ray", village: "Somvari Hat", amount: 1051 },
+            { name: "prasenjit ray", village: "Somvari Hat", amount: 501 },
+            { name: "sukku ray", village: "Somvari Hat", amount: 511 },
+            { name: "manoj swarnakar", village: "Somvari Hat", amount: 2001 },
+            { name: "jitendra swarnakar", village: "Somvari Hat", amount: 5001 },
+            { name: "biswajit swarnakar", village: "Somvari Hat", amount: 5051 },
+            { name: "gopal swarnakar", village: "Somvari Hat", amount: 5151 },
+            { name: "hriday sarkar", village: "Somvari Hat", amount: 5151 },
+            { name: "pankaj swarnakar", village: "Somvari Hat", amount: 2001 },
+            { name: "mangal ray", village: "Somvari Hat", amount: 501 },
+            { name: "digen ray", village: "Somvari Hat", amount: 2501 },
+            { name: "babulal swarnakar", village: "Somvari Hat", amount: 1005 },
+            { name: "gautam swarnakar", village: "Somvari Hat", amount: 5051 },
+            { name: "sanjay swarnakar", village: "Somvari Hat", amount: 2101 },
+            { name: "suchin ray", village: "Somvari Hat", amount: 551 },
+            { name: "deepak singh", village: "Somvari Hat", amount: 2501 },
+            { name: "dilip sarkar", village: "Somvari Hat", amount: 1001 },
+            { name: "chandan ray", village: "Somvari Hat", amount: 500 },
+            { name: "montu mandal", village: "Somvari Hat", amount: 1001 },
+            { name: "disco ray", village: "Somvari Hat", amount: 1100 },
+            { name: "uttam sarkar", village: "Somvari Hat", amount: 5551 },
+            { name: "sagar ray", village: "Somvari Hat", amount: 501 },
+            { name: "ganga ray", village: "Somvari Hat", amount: 801 },
+            { name: "dhananjay ray", village: "Somvari Hat", amount: 500 },
+            { name: "pappu mandal", village: "Somvari Hat", amount: 1102 },
+            { name: "niranjan swarnakar", village: "Somvari Hat", amount: 5011 },
+            { name: "vinod ray", village: "Somvari Hat", amount: 500 },
+            { name: "pradip ray", village: "Somvari Hat", amount: 251 },
+            { name: "lalan mandal", village: "Somvari Hat", amount: 251 },
+            { name: "ujjwal sarkar", village: "Somvari Hat", amount: 500 },
+            { name: "khudi sarkar", village: "Somvari Hat", amount: 252 },
+            { name: "chhotan sarkar", village: "Somvari Hat", amount: 102 },
+            { name: "dilip swarnakar", village: "Somvari Hat", amount: 2101 },
+            { name: "arun ray", village: "Somvari Hat", amount: 300 },
+            { name: "vilochan mandal", village: "Somvari Hat", amount: 105 },
+            { name: "santosh sarkar", village: "Somvari Hat", amount: 305 },
+            { name: "raju singh", village: "Somvari Hat", amount: 551 },
+            { name: "vimal mandal", village: "Somvari Hat", amount: 505 },
+            { name: "dev ray", village: "Somvari Hat", amount: 151 },
+            { name: "pappu sarkar", village: "Somvari Hat", amount: 201 },
+            { name: "ganesh ray", village: "Somvari Hat", amount: 250 },
+            { name: "appu sarkar", village: "Somvari Hat", amount: 251 },
+            { name: "rajkumar singh", village: "Somvari Hat", amount: 502 },
+            { name: "deepnarayan ray", village: "Somvari Hat", amount: 500 },
+            { name: "sudam ray", village: "Somvari Hat", amount: 501 },
+            { name: "birbal ray", village: "Somvari Hat", amount: 101 },
+            { name: "sorjit ray", village: "Somvari Hat", amount: 155 },
+            { name: "munnu ray", village: "Somvari Hat", amount: 1100 },
+            { name: "fulchan mandal", village: "Somvari Hat", amount: 505 },
+            { name: "bishu sarkar", village: "Somvari Hat", amount: 205 },
+            { name: "dablu swarnakar", village: "Somvari Hat", amount: 251 },
+            { name: "bhola swarnakar", village: "Somvari Hat", amount: 201 },
+            { name: "dinesh sarkar", village: "Somvari Hat", amount: 301 },
+            { name: "ashu sarkar", village: "Somvari Hat", amount: 101 },
+            { name: "bindu ray", village: "Somvari Hat", amount: 205 },
+            { name: "ashok sarkar", village: "Somvari Hat", amount: 112 },
+            { name: "labbu sarkar", village: "Somvari Hat", amount: 501 },
+            { name: "lalu ray", village: "Somvari Hat", amount: 501 },
+            { name: "hiralal sharma", village: "Bintola", amount: 251 },
+            { name: "pankaj sharma", village: "Bintola", amount: 152 },
+            { name: "motilal ravidas", village: "Bintola", amount: 151 },
+            { name: "rajkumar sharma", village: "Mistritola", amount: 3001 },
+            { name: "gulab sharma", village: "Bintola", amount: 251 },
+            { name: "rampravesh mahato", village: "Bintola", amount: 151 },
+            { name: "amar ravidas", village: "Bintola", amount: 110 },
+            { name: "dukhu mandal", village: "Bintola", amount: 100 },
+            { name: "bhikhari rajak", village: "Bintola", amount: 151 },
+            { name: "varun mandal", village: "Bintola", amount: 201 },
+            { name: "dr uttam haldar", village: "Bintola", amount: 5001 },
+            { name: "suraj kumar mandal", village: "Bintola", amount: 105 },
+            { name: "prabhu mahato", village: "Bintola", amount: 125 },
+            { name: "babloo mahato", village: "Bintola", amount: 205 },
+            { name: "nilesh bhagat", village: "Bhagat Toli", amount: 500 },
+            { name: "ganga prasad bhagat", village: "Bhagat Toli", amount: 1100 },
+            { name: "babloo chaudhary", village: "Bhagat Toli", amount: 1101 },
+            { name: "karan gupta", village: "Kachhari", amount: 76 },
+            { name: "mithun sah", village: "Kachhari", amount: 101 },
+            { name: "kundan yadav", village: "Kachhari", amount: 1100 },
+            { name: "santosh mandal", village: "Pakija More", amount: 252 },
+            { name: "sadhu mandal", village: "Pakija More", amount: 105 },
+            { name: "suraj swarnakar", village: "Pakija More", amount: 1005 },
+            { name: "dr praveen haldar", village: "Pakija More", amount: 505 },
+            { name: "pappu saha", village: "Pakija More", amount: 1500 },
+            { name: "mohan thakur", village: "Pakija More", amount: 150 },
+            { name: "wine shop", village: "Pakija More", amount: 1001 }
+        ];
+
+        function getStorage(key, defaultVal) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : defaultVal;
+            } catch (e) {
+                return defaultVal;
+            }
+        }
+
+        function setStorage(key, val) {
+            try {
+                localStorage.setItem(key, JSON.stringify(val));
+            } catch (e) {
+                console.error('LocalStorage quota error:', e);
+            }
+        }
+
+        async function syncToGoogleSheets(actionType, moduleName, payloadData) {
+            if (!APPS_SCRIPT_URL) return;
+            const syncPacket = {
+                action: actionType,
+                module: moduleName,
+                timestamp: new Date().toISOString(),
+                data: payloadData
+            };
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(syncPacket)
+                });
+                if (payloadData && typeof payloadData === 'object') {
+                    payloadData.syncStatus = 'Synced';
+                }
+            } catch (error) {
+                console.error('Google Sheets sync failed, queuing for retry:', error);
+                if (payloadData && typeof payloadData === 'object') {
+                    payloadData.syncStatus = 'Queued';
+                }
+                const queue = getStorage(STORAGE_KEYS.SYNC_QUEUE, []);
+                queue.push(syncPacket);
+                setStorage(STORAGE_KEYS.SYNC_QUEUE, queue);
+            }
+        }
+
+        async function flushSyncQueue() {
+            const queue = getStorage(STORAGE_KEYS.SYNC_QUEUE, []);
+            if (queue.length === 0 || !navigator.onLine) return;
+            const remaining = [];
+            for (const pkt of queue) {
+                try {
+                    await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        cache: 'no-cache',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(pkt)
+                    });
+                } catch (e) {
+                    remaining.push(pkt);
+                }
+            }
+            setStorage(STORAGE_KEYS.SYNC_QUEUE, remaining);
+        }
+        window.addEventListener('online', flushSyncQueue);
+
+        function logUserActivity(actionName, details) {
+            const user = getStorage(STORAGE_KEYS.CURRENT_USER, null);
+            const entry = {
+                id: 'ACT-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+                userId: user ? user.id : 'system',
+                username: user ? user.username : 'system',
+                userName: user ? user.name : 'System',
+                role: user ? user.role : 'SYSTEM',
+                action: actionName,
+                details: details,
+                timestamp: new Date().toLocaleString()
+            };
+            const logs = getStorage(STORAGE_KEYS.ACTIVITY, []);
+            logs.unshift(entry);
+            if (logs.length > 500) logs.length = 500;
+            setStorage(STORAGE_KEYS.ACTIVITY, logs);
+            syncToGoogleSheets('LOG', 'ACTIVITY', entry);
+        }
+
+        function mergeArraysById(localArr, remoteArr) {
+            const map = new Map();
+            (localArr || []).forEach(item => {
+                if (item && (item.id || item.slipId || item.username)) {
+                    map.set(item.id || item.slipId || item.username, item);
+                }
+            });
+            (remoteArr || []).forEach(item => {
+                if (item && (item.id || item.slipId || item.username)) {
+                    map.set(item.id || item.slipId || item.username, item);
+                }
+            });
+            return Array.from(map.values());
+        }
+
+        async function fetchAllDataFromSheet() {
+            if (!APPS_SCRIPT_URL) return;
+            const badge = document.getElementById('cloudSyncBadge');
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-rotate fa-spin mr-1"></i> Syncing Cloud...';
+            try {
+                const res = await fetch(APPS_SCRIPT_URL + '?action=GET_ALL&t=' + Date.now());
+                if (res.ok) {
+                    const json = await res.json();
+                    const db = json.data || json;
+                    if (db) {
+                        if (Array.isArray(db.USERS) && db.USERS.length > 0) {
+                            const mergedUsers = mergeArraysById(getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS), db.USERS);
+                            setStorage(STORAGE_KEYS.USERS, mergedUsers);
+                            const savedCurr = getStorage(STORAGE_KEYS.CURRENT_USER, null);
+                            if (savedCurr) {
+                                const updatedMe = mergedUsers.find(u => u.id === savedCurr.id || u.username === savedCurr.username);
+                                if (updatedMe && updatedMe.status !== 'Deleted') {
+                                    currentUser = updatedMe;
+                                    setStorage(STORAGE_KEYS.CURRENT_USER, updatedMe);
+                                }
+                            }
+                        }
+                        if (Array.isArray(db.CHANDA)) {
+                            const mergedChanda = mergeArraysById(getStorage(STORAGE_KEYS.CHANDA, []), db.CHANDA);
+                            setStorage(STORAGE_KEYS.CHANDA, mergedChanda);
+                            const knownVillages = new Set(getStorage(STORAGE_KEYS.VILLAGES, NEW_VILLAGES_LIST));
+                            mergedChanda.forEach(c => { if (c.village) knownVillages.add(c.village); });
+                            setStorage(STORAGE_KEYS.VILLAGES, Array.from(knownVillages));
+                        }
+                        if (Array.isArray(db.KHARCH)) {
+                            setStorage(STORAGE_KEYS.KHARCH, mergeArraysById(getStorage(STORAGE_KEYS.KHARCH, []), db.KHARCH));
+                        }
+                        if (Array.isArray(db.DEPOSIT)) {
+                            setStorage(STORAGE_KEYS.DEPOSIT, mergeArraysById(getStorage(STORAGE_KEYS.DEPOSIT, []), db.DEPOSIT));
+                        }
+                        if (Array.isArray(db.TRASH)) {
+                            const localTrash = getStorage(STORAGE_KEYS.TRASH, []);
+                            const combinedTrash = [...localTrash];
+                            db.TRASH.forEach(rt => {
+                                const rId = rt.id || (rt.item && rt.item.id);
+                                if (!combinedTrash.some(lt => (lt.id || (lt.item && lt.item.id)) === rId)) {
+                                    combinedTrash.push(rt);
+                                }
+                            });
+                            setStorage(STORAGE_KEYS.TRASH, combinedTrash);
+                        }
+                        if (Array.isArray(db.NOTICE) && db.NOTICE.length > 0) {
+                            setStorage(STORAGE_KEYS.NOTICE, db.NOTICE[db.NOTICE.length - 1]);
+                        }
+                        if (currentUser) {
+                            updateHeaderAndProfileUI();
+                            updateVillageSuggestions();
+                            loadNoticeData();
+                            refreshAllData();
+                            renderChandaTable();
+                            renderKharchTable();
+                            renderDepositTable();
+                            renderUsersTable();
+                            renderTrashTable();
+                        }
+                    }
+                }
+                if (badge) badge.innerHTML = '<i class="fa-solid fa-cloud-check mr-1"></i> Cloud Connected';
+            } catch (err) {
+                if (badge) badge.innerHTML = '<i class="fa-solid fa-cloud mr-1"></i> Local + Auto-Sync';
+            }
+        }
+
+        function backupAllLocalDataToSheet() {
+            const users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+            users.forEach(u => syncToGoogleSheets('SYNC_USER', 'USERS', u));
+            const notice = getStorage(STORAGE_KEYS.NOTICE, null);
+            if (notice) syncToGoogleSheets('SYNC_NOTICE', 'NOTICE', { id: 'MAIN_NOTICE', ...notice });
+            flushSyncQueue();
+        }
+
+        if (!localStorage.getItem(STORAGE_KEYS.USERS)) setStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+        if (!localStorage.getItem(STORAGE_KEYS.VILLAGES)) setStorage(STORAGE_KEYS.VILLAGES, NEW_VILLAGES_LIST);
+        setStorage(STORAGE_KEYS.OLD_CHANDA, OLD_CHANDA_DATA_2025);
+
+        if (!localStorage.getItem(STORAGE_KEYS.NOTICE)) {
+            setStorage(STORAGE_KEYS.NOTICE, {
+                id: 'MAIN_NOTICE',
+                title: 'Puja Countdown Notice:',
+                message: 'Sombarihatpara Puja committee members are requested to handover all daily collected Chanda amounts to the HOD / Treasurer before 8:00 PM every evening.',
+                issuedBy: 'Samiti Admin'
+            });
+        }
+    </script>
+
+    <!-- Login Section -->
+    <div id="loginSection" class="fixed inset-0 z-50 bg-gradient-to-br from-deepCrimson via-festiveRed to-black flex items-center justify-center p-4">
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-festiveGold w-full max-w-md p-8 relative overflow-hidden">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-festiveRed text-festiveGold rounded-full shadow-lg mb-3 border-2 border-festiveGold">
+                    <i class="fa-solid fa-om text-2xl"></i>
+                </div>
+                <h1 class="festive-title text-2xl font-bold text-festiveRed uppercase tracking-wider">Durga Puja Samiti</h1>
+                <p class="text-xs text-amber-700 font-semibold uppercase tracking-widest mt-1">Sombarihatpara • Secure Portal</p>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Username / ID</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" id="loginUsername" required placeholder="Enter username" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-festiveRed focus:outline-none text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-festiveRed focus:outline-none text-sm">
+                    </div>
+                </div>
+
+                <div id="loginError" class="text-red-600 text-xs text-center hidden font-medium"></div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-festiveRed to-deepCrimson hover:from-deepCrimson hover:to-festiveRed text-festiveGold font-bold py-3 rounded-lg shadow-md transition transform active:scale-95 uppercase tracking-wider text-sm border border-festiveGold/50">
+                    <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i> Secure Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="hidden flex-1 flex flex-col">
+        <header class="bg-gradient-to-r from-deepCrimson via-festiveRed to-deepCrimson text-white shadow-md sticky top-0 z-30 border-b-2 border-festiveGold">
+            <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSidebar()" class="text-festiveGold hover:text-white p-2 rounded-lg hover:bg-black/20 transition focus:outline-none text-xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h2 class="festive-title text-base sm:text-lg font-bold text-festiveGold tracking-wide leading-tight">DURGA PUJA SAMITI</h2>
+                        <div class="flex items-center space-x-2">
+                            <p class="text-[10px] text-amber-200 uppercase tracking-widest font-medium">Sombarihatpara</p>
+                            <span id="cloudSyncBadge" onclick="fetchAllDataFromSheet()" title="Click to sync with Google Sheets" class="cursor-pointer text-[9px] bg-black/30 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                                <i class="fa-solid fa-cloud mr-1"></i> Auto-Synced
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="hidden sm:flex items-center space-x-2 bg-black/30 px-3 py-1.5 rounded-full border border-festiveGold/30">
+                        <img id="navUserPhoto" src="" alt="Avatar" class="w-7 h-7 rounded-full object-cover border border-festiveGold">
+                        <div class="text-left text-xs">
+                            <div id="navUserName" class="font-bold text-amber-300 leading-tight">Name</div>
+                            <div id="navUserRole" class="text-[10px] text-gray-300 uppercase tracking-wider">Role</div>
+                        </div>
+                    </div>
+                    <button onclick="handleLogout()" title="Logout" class="bg-festiveGold hover:bg-amber-400 text-deepCrimson px-3 py-1.5 rounded-lg text-xs font-bold transition shadow uppercase tracking-wider flex items-center space-x-1">
+                        <i class="fa-solid fa-power-off"></i> <span class="hidden md:inline">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity"></div>
+
+        <aside id="sidebarDrawer" class="fixed inset-y-0 left-0 w-72 bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-300 flex flex-col border-r border-festiveGold/30">
+            <div class="p-5 bg-gradient-to-br from-deepCrimson to-festiveRed text-white border-b-2 border-festiveGold flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-festiveGold text-deepCrimson flex items-center justify-center font-bold text-lg shadow">
+                        <i class="fa-solid fa-hands-praying"></i>
+                    </div>
+                    <div>
+                        <h3 class="festive-title font-bold text-sm text-festiveGold">Samiti Panel</h3>
+                        <p class="text-[10px] text-gray-200">Sombarihatpara Puja</p>
+                    </div>
+                </div>
+                <button onclick="toggleSidebar()" class="text-festiveGold hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="p-4 bg-amber-50/80 border-b border-amber-200 flex items-center space-x-3">
+                <img id="sbUserPhoto" src="" class="w-12 h-12 rounded-full object-cover border-2 border-festiveRed shadow-sm" alt="User">
+                <div class="overflow-hidden">
+                    <h4 id="sbUserName" class="font-bold text-sm text-gray-800 truncate">User Name</h4>
+                    <p id="sbUserPhone" class="text-xs text-gray-500">Phone</p>
+                    <span id="sbUserRoleBadge" class="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded bg-festiveRed text-festiveGold uppercase">Role</span>
+                </div>
+            </div>
+
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1.5 text-sm">
+                <button onclick="switchTab('dashboard')" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition active-nav">
+                    <i class="fa-solid fa-chart-pie w-5 text-festiveRed"></i> <span>Dashboard</span>
+                </button>
+                <button onclick="switchTab('chanda')" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition">
+                    <i class="fa-solid fa-hand-holding-dollar w-5 text-festiveRed"></i> <span>Chanda Collection</span>
+                </button>
+                <button onclick="switchTab('kharch')" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition">
+                    <i class="fa-solid fa-receipt w-5 text-festiveRed"></i> <span>Kharch (Expenses)</span>
+                </button>
+                <button onclick="switchTab('deposit')" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition">
+                    <i class="fa-solid fa-vault w-5 text-festiveRed"></i> <span>HOD Deposit / Handover</span>
+                </button>
+                <button id="navUsersBtn" onclick="switchTab('users')" class="nav-btn hidden w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition">
+                    <i class="fa-solid fa-users-gear w-5 text-festiveRed"></i> <span>User Management (Admin)</span>
+                </button>
+                <button id="navTrashBtn" onclick="switchTab('trash')" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition">
+                    <i class="fa-solid fa-trash-can w-5 text-festiveRed"></i> <span>Recycle Bin</span>
+                </button>
+                <button onclick="switchTab('profile')" class="nav-btn w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-gray-700 hover:bg-red-50 hover:text-festiveRed font-medium transition">
+                    <i class="fa-solid fa-id-card w-5 text-festiveRed"></i> <span>My Profile</span>
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-gray-200 text-center text-xs text-gray-500 bg-gray-50">
+                Durga Puja Samiti Sombarihatpara © 2026
+            </div>
+        </aside>
+
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+            <!-- Dashboard Tab -->
+            <section id="tab-dashboard" class="tab-content space-y-6">
+                <div class="bg-gradient-to-r from-deepCrimson via-festiveRed to-amber-900 rounded-2xl p-6 text-white shadow-xl border-2 border-festiveGold relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="festive-title text-2xl sm:text-3xl font-bold text-festiveGold mb-1">Durga Puja 2026 Dashboard</h2>
+                        <p class="text-xs sm:text-sm text-amber-100 max-w-xl">Welcome to Sombarihatpara Samiti portal. Track collections, expenses, and HOD handover records.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="openChandaModal()" class="bg-festiveGold hover:bg-amber-400 text-deepCrimson px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-lg flex items-center justify-center space-x-1.5 border border-white/45 transition">
+                            <i class="fa-solid fa-plus-circle text-sm"></i> <span>Add Chanda</span>
+                        </button>
+                        <button onclick="openKharchModal()" class="bg-amber-100 hover:bg-white text-deepCrimson px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-lg flex items-center justify-center space-x-1.5 border border-festiveGold transition">
+                            <i class="fa-solid fa-receipt text-sm"></i> <span>Add Expense</span>
+                        </button>
+                        <button onclick="openDepositModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-lg flex items-center justify-center space-x-1.5 border border-festiveGold/40 transition">
+                            <i class="fa-solid fa-vault text-sm"></i> <span>HOD Deposit</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="bg-white p-5 rounded-xl shadow border-l-4 border-festiveRed flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase">Total Chanda</p>
+                            <h3 id="dashTotalChanda" class="text-xl font-extrabold text-festiveRed mt-1">₹0</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-red-50 text-festiveRed rounded-xl flex items-center justify-center text-xl shadow-sm"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow border-l-4 border-amber-600 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase">Total Kharch</p>
+                            <h3 id="dashTotalKharch" class="text-xl font-extrabold text-amber-700 mt-1">₹0</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-50 text-amber-700 rounded-xl flex items-center justify-center text-xl shadow-sm"><i class="fa-solid fa-receipt"></i></div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow border-l-4 border-blue-600 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase">HOD Deposited</p>
+                            <h3 id="dashTotalDeposit" class="text-xl font-extrabold text-blue-700 mt-1">₹0</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-700 rounded-xl flex items-center justify-center text-xl shadow-sm"><i class="fa-solid fa-vault"></i></div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow border-l-4 border-emerald-600 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase">Balance in Hand</p>
+                            <h3 id="dashBalanceInHand" class="text-xl font-extrabold text-emerald-700 mt-1">₹0</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center text-xl shadow-sm"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow border-l-4 border-purple-600 flex items-center justify-between sm:col-span-2 lg:col-span-1">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase">Total Donors</p>
+                            <h3 id="dashTotalDonors" class="text-xl font-extrabold text-purple-700 mt-1">0</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-50 text-purple-700 rounded-xl flex items-center justify-center text-xl shadow-sm"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow p-6">
+                        <h3 class="font-bold text-base text-gray-800 mb-4 flex items-center justify-between">
+                            <span><i class="fa-solid fa-clock-rotate-left mr-2 text-festiveRed"></i> Recent Chanda Collections</span>
+                            <button onclick="switchTab('chanda')" class="text-xs text-festiveRed hover:underline font-semibold">View All</button>
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-gray-50 text-xs uppercase text-gray-600 border-b">
+                                    <tr>
+                                        <th class="p-3">Name / Village</th>
+                                        <th class="p-3">Slip (₹)</th>
+                                        <th class="p-3">Amount</th>
+                                        <th class="p-3">Type</th>
+                                        <th class="p-3">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashRecentChandaBody" class="divide-y divide-gray-100">
+                                    <tr><td colspan="5" class="p-4 text-center text-gray-400">No collections recorded yet.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-bold text-base text-gray-800"><i class="fa-solid fa-bullhorn mr-2 text-festiveRed"></i> Committee Notice Board</h3>
+                                <button id="editNoticeBtn" onclick="openNoticeModal()" class="hidden text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold px-2.5 py-1 rounded-lg transition">
+                                    <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Notice
+                                </button>
+                            </div>
+                            <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-xs text-amber-900 space-y-2">
+                                <p class="font-bold"><i class="fa-solid fa-circle-exclamation text-festiveRed mr-1"></i> <span id="noticeTitleDisplay">Puja Countdown Notice:</span></p>
+                                <p id="noticeMessageDisplay">Sombarihatpara Puja committee members...</p>
+                                <p class="text-gray-500 pt-2 border-t border-amber-200 font-mono">Issued by: <span id="noticeIssuerDisplay">Samiti Admin</span></p>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t text-center">
+                            <button onclick="switchTab('deposit')" class="w-full bg-festiveRed hover:bg-deepCrimson text-festiveGold font-bold py-2.5 rounded-lg shadow text-xs uppercase tracking-wider">
+                                <i class="fa-solid fa-file-invoice-dollar mr-2"></i> Create HOD Deposit Slip
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chanda Module Tab -->
+            <section id="tab-chanda" class="tab-content hidden space-y-6">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b gap-4">
+                        <div>
+                            <h2 class="festive-title text-xl font-bold text-festiveRed">Chanda Collection Module</h2>
+                            <p class="text-xs text-gray-500">Record and manage donations with smart village dropdown & free manual typing.</p>
+                        </div>
+                        <button onclick="openChandaModal()" class="bg-festiveRed hover:bg-deepCrimson text-festiveGold px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-plus-circle"></i> <span>Add New Chanda</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-1">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" id="chandaSearch" oninput="renderChandaTable()" placeholder="Search by donor name or village..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-festiveRed focus:outline-none">
+                        </div>
+                        <select id="chandaVillageFilter" onchange="renderChandaTable()" class="px-4 py-2 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-festiveRed focus:outline-none">
+                            <option value="">All Villages</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-xs uppercase text-gray-700 border-b">
+                                <tr>
+                                    <th class="p-3">ID</th>
+                                    <th class="p-3">Donor Name & Village</th>
+                                    <th class="p-3">Last Year</th>
+                                    <th class="p-3">Slip (₹)</th>
+                                    <th class="p-3">Current Amount</th>
+                                    <th class="p-3">Type / Source / Date</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="chandaTableBody" class="divide-y divide-gray-100">
+                                <tr><td colspan="7" class="p-4 text-center text-gray-400">Loading Chanda records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kharch Module Tab -->
+            <section id="tab-kharch" class="tab-content hidden space-y-6">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b gap-4">
+                        <div>
+                            <h2 class="festive-title text-xl font-bold text-festiveRed">Kharch (Expense Tracker)</h2>
+                            <p class="text-xs text-gray-500">Record all committee expenses.</p>
+                        </div>
+                        <button onclick="openKharchModal()" class="bg-festiveRed hover:bg-deepCrimson text-festiveGold px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-plus-circle"></i> <span>Add New Expense</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-xs uppercase text-gray-700 border-b">
+                                <tr>
+                                    <th class="p-3">Purpose / Item</th>
+                                    <th class="p-3">Incurred By</th>
+                                    <th class="p-3">Amount</th>
+                                    <th class="p-3">Mode & Date</th>
+                                    <th class="p-3">Sync Status</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kharchTableBody" class="divide-y divide-gray-100">
+                                <tr><td colspan="6" class="p-4 text-center text-gray-400">Loading expenses...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HOD Deposit Tab -->
+            <section id="tab-deposit" class="tab-content hidden space-y-6">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b gap-4">
+                        <div>
+                            <h2 class="festive-title text-xl font-bold text-festiveRed">HOD Deposit / Daily Handover</h2>
+                            <p class="text-xs text-gray-500">Handover collected funds to the Treasurer/HOD with signatures.</p>
+                        </div>
+                        <button onclick="openDepositModal()" class="bg-festiveRed hover:bg-deepCrimson text-festiveGold px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-plus-circle"></i> <span>Create Deposit Handover</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-xs uppercase text-gray-700 border-b">
+                                <tr>
+                                    <th class="p-3">Slip ID</th>
+                                    <th class="p-3">Handed Over To / By</th>
+                                    <th class="p-3">Cash / UPI</th>
+                                    <th class="p-3">Total Amount</th>
+                                    <th class="p-3">Signatures</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="depositTableBody" class="divide-y divide-gray-100">
+                                <tr><td colspan="6" class="p-4 text-center text-gray-400">Loading handover records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Management Tab -->
+            <section id="tab-users" class="tab-content hidden space-y-6">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b gap-4">
+                        <div>
+                            <h2 class="festive-title text-xl font-bold text-festiveRed">User Management (Admin Panel)</h2>
+                            <p class="text-xs text-gray-500">Create, edit and manage committee member accounts securely.</p>
+                        </div>
+                        <button onclick="openUserModal()" class="bg-festiveRed hover:bg-deepCrimson text-festiveGold px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-user-plus"></i> <span>Create New User</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-xs uppercase text-gray-700 border-b">
+                                <tr>
+                                    <th class="p-3">User / Name</th>
+                                    <th class="p-3">Username</th>
+                                    <th class="p-3">Mobile No</th>
+                                    <th class="p-3">Role</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recycle Bin Tab -->
+            <section id="tab-trash" class="tab-content hidden space-y-6">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex items-center justify-between pb-4 border-b">
+                        <div>
+                            <h2 class="festive-title text-xl font-bold text-festiveRed">Recycle Bin (Trash)</h2>
+                            <p class="text-xs text-gray-500">All deleted items stay safely in Recycle Bin & Google Sheet. Restore anytime.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 text-xs uppercase text-gray-700 border-b">
+                                <tr>
+                                    <th class="p-3">Module</th>
+                                    <th class="p-3">Record Details</th>
+                                    <th class="p-3">Deleted At</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trashTableBody" class="divide-y divide-gray-100">
+                                <tr><td colspan="4" class="p-4 text-center text-gray-400">Recycle bin is empty.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Tab -->
+            <section id="tab-profile" class="tab-content hidden space-y-6">
+                <div class="bg-white rounded-xl shadow max-w-2xl mx-auto p-6 sm:p-8">
+                    <div class="text-center pb-6 border-b">
+                        <div class="relative inline-block mb-3">
+                            <img id="profileAvatar" src="" class="w-24 h-24 rounded-full object-cover mx-auto border-4 border-festiveGold shadow-md" alt="Profile">
+                        </div>
+                        <h2 id="profileNameDisplay" class="festive-title text-xl font-bold text-gray-800">Name</h2>
+                        <span id="profileRoleBadge" class="inline-block mt-1 px-3 py-1 text-xs font-bold rounded bg-festiveRed text-festiveGold uppercase tracking-wider">Role</span>
+                        
+                        <div class="mt-4 flex justify-center gap-2">
+                            <label class="bg-amber-100 hover:bg-amber-200 text-amber-900 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition">
+                                <i class="fa-solid fa-camera mr-1"></i> Change Photo
+                                <input type="file" id="profileImageInput" accept="image/*" class="hidden" onchange="handleProfilePhotoUpload(event)">
+                            </label>
+                            <button type="button" onclick="removeProfilePhoto()" class="bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                <i class="fa-solid fa-trash mr-1"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+
+                    <form id="profileForm" onsubmit="updateProfile(event)" class="mt-6 space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Full Name</label>
+                                <input type="text" id="profName" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-festiveRed focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Mobile Number</label>
+                                <input type="text" id="profPhone" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-festiveRed focus:outline-none">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Username / Login ID</label>
+                                <input type="text" id="profUsername" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-festiveRed focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                                <input type="text" id="profPassword" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-festiveRed focus:outline-none">
+                            </div>
+                        </div>
+                        <div id="profileSaveMsg" class="hidden p-3 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold text-center">
+                            <i class="fa-solid fa-circle-check mr-1"></i> Profile saved & synced to Google Sheets!
+                        </div>
+                        <div class="pt-4 border-t flex justify-end">
+                            <button type="submit" id="saveProfileBtn" class="bg-festiveRed hover:bg-deepCrimson text-festiveGold px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider shadow cursor-pointer transition active:scale-95">
+                                <i class="fa-solid fa-floppy-disk mr-2"></i> Save Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-gradient-to-r from-deepCrimson via-festiveRed to-deepCrimson text-white border-t-2 border-festiveGold mt-auto py-6 px-4">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                <div>
+                    <h3 class="festive-title text-base font-bold text-festiveGold tracking-wide">Durga Puja Samiti Sombarihat</h3>
+                    <p class="text-xs text-amber-200 mt-1">Sombarihatpara • All Rights Reserved © 2026</p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold">
+                    <a href="https://whatsapp.com/channel/0029VbCx6ihFSAsyjw1FXS3F" target="_blank" class="hover:text-festiveGold flex items-center gap-1.5 transition">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                    </a>
+                    <a href="https://www.instagram.com/youth_club_udhwa01?stkn=MXJ2dXRjd2xzcmN5ag==" target="_blank" class="hover:text-festiveGold flex items-center gap-1.5 transition">
+                        <i class="fa-brands fa-instagram text-sm"></i> Instagram
+                    </a>
+                    <a href="mailto:tusharswarnkar31@gmail.com" class="hover:text-festiveGold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-envelope text-sm"></i> Email
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <!-- Notice Modal -->
+    <div id="noticeModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-t-4 border-festiveRed">
+            <div class="flex items-center justify-between pb-3 border-b">
+                <h3 class="festive-title font-bold text-lg text-festiveRed">Edit Committee Notice Board</h3>
+                <button onclick="closeModal('noticeModal')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveNotice(event)" class="mt-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Notice Title</label>
+                    <input type="text" id="notTitle" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Notice Message</label>
+                    <textarea id="notMessage" rows="4" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Issued By</label>
+                    <input type="text" id="notIssuer" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+                <div class="pt-4 border-t flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('noticeModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                    <button type="submit" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase">Update Notice</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chanda Modal (With Smart Village Dropdown + Free Typing) -->
+    <div id="chandaModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-t-4 border-festiveRed">
+            <div class="flex items-center justify-between pb-3 border-b">
+                <h3 id="chandaModalTitle" class="festive-title font-bold text-lg text-festiveRed">Add Chanda Collection</h3>
+                <button onclick="closeModal('chandaModal')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveChanda(event)" class="mt-4 space-y-4">
+                <input type="hidden" id="chandaId">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Donor Name (English)</label>
+                        <input type="text" id="cName" oninput="autoFillLastYear()" required placeholder="e.g. rohan singh" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Village / Para (Select or Type)</label>
+                        <div class="flex gap-1">
+                            <select id="cVillageSelect" onchange="onVillageSelectChange(this)" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white">
+                                <option value="">-- Choose Village --</option>
+                            </select>
+                        </div>
+                        <input type="text" id="cVillageCustom" oninput="autoFillLastYear()" placeholder="Or type outside village name" class="w-full mt-1.5 px-3 py-2 rounded-lg border border-gray-300 text-sm hidden">
+                        <small class="text-[10px] text-gray-500">Bahar ke log ke liye naya gaon yahan type karein.</small>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Last Year (₹) [Auto]</label>
+                        <input type="number" id="cLastYear" placeholder="e.g. 500" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-gray-50 font-mono font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Slip Amount (₹)</label>
+                        <input type="number" id="cSlip" placeholder="Slip Rakam" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm font-mono font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Current Amount (₹)*</label>
+                        <input type="number" id="cAmount" required placeholder="e.g. 1001" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm font-mono font-bold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Payment Type</label>
+                        <select id="cType" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                            <option value="Cash">Cash</option>
+                            <option value="UPI">UPI / Online</option>
+                            <option value="Bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Collection Source</label>
+                        <select id="cSource" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                            <option value="Home Visit">Home Visit</option>
+                            <option value="Mandi / Camp">Mandi / Camp</option>
+                            <option value="WhatsApp / Online">WhatsApp / Online</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Date</label>
+                    <input type="date" id="cDate" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+
+                <div class="pt-4 border-t flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('chandaModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                    <button type="submit" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase">Save Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Kharch Modal -->
+    <div id="kharchModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-t-4 border-festiveRed">
+            <div class="flex items-center justify-between pb-3 border-b">
+                <h3 class="festive-title font-bold text-lg text-festiveRed">Add Kharch (Expense)</h3>
+                <button onclick="closeModal('kharchModal')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveKharch(event)" class="mt-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Purpose / Item Name</label>
+                    <input type="text" id="kPurpose" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Incurred By</label>
+                        <input type="text" id="kBy" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Amount (₹)*</label>
+                        <input type="number" id="kAmount" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Payment Mode</label>
+                        <select id="kType" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                            <option value="Cash">Cash</option>
+                            <option value="UPI">UPI / Online</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Date</label>
+                        <input type="date" id="kDate" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                </div>
+                <div class="pt-4 border-t flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('kharchModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                    <button type="submit" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase">Save Expense</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- HOD Deposit Form Modal -->
+    <div id="depositModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-t-4 border-festiveRed">
+            <div class="flex items-center justify-between pb-3 border-b">
+                <h3 class="festive-title font-bold text-lg text-festiveRed">Create HOD Handover Deposit</h3>
+                <button onclick="closeModal('depositModal')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleDepositFormSubmit(event)" class="mt-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Handed Over To (HOD / Treasurer)</label>
+                    <input type="text" id="dTo" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Handed Over By</label>
+                    <input type="text" id="dBy" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cash Amount (₹)</label>
+                        <input type="number" id="dCash" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">UPI Amount (₹)</label>
+                        <input type="number" id="dUpi" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Date</label>
+                    <input type="date" id="dDate" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                </div>
+
+                <div class="pt-4 border-t flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('depositModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                    <button type="submit" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase shadow">Next: HOD Signature</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Step 1: HOD Signature Modal -->
+    <div id="hodSigModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border-t-4 border-festiveRed text-center">
+            <h3 class="festive-title font-bold text-lg text-festiveRed mb-1">HOD / Receiver Signature</h3>
+            <p class="text-xs text-gray-500 mb-4">Please sign below as HOD to approve receipt.</p>
+            
+            <div class="border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 p-2 inline-block">
+                <canvas id="hodSigCanvas" width="320" height="150" class="bg-white cursor-crosshair touch-none rounded"></canvas>
+            </div>
+            <div>
+                <button type="button" onclick="clearSig('hodSigCanvas')" class="text-xs text-red-600 font-bold mt-2 hover:underline">Clear Signature</button>
+            </div>
+
+            <div class="pt-4 mt-4 border-t flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('hodSigModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                <button type="button" onclick="proceedToDepositorSig()" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase shadow">Next: Depositor Sign</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Depositor Signature Modal -->
+    <div id="bySigModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border-t-4 border-festiveRed text-center">
+            <h3 class="festive-title font-bold text-lg text-festiveRed mb-1">Depositor Signature</h3>
+            <p class="text-xs text-gray-500 mb-4">Please sign below as the person handing over the cash/amount.</p>
+            
+            <div class="border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 p-2 inline-block">
+                <canvas id="bySigCanvas" width="320" height="150" class="bg-white cursor-crosshair touch-none rounded"></canvas>
+            </div>
+            <div>
+                <button type="button" onclick="clearSig('bySigCanvas')" class="text-xs text-red-600 font-bold mt-2 hover:underline">Clear Signature</button>
+            </div>
+
+            <div class="pt-4 mt-4 border-t flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('bySigModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                <button type="button" onclick="finalizeDepositProcess()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg text-xs font-bold uppercase shadow">Submit & Complete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View HOD Deposit Receipt Modal -->
+    <div id="receiptModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-t-4 border-festiveRed relative">
+            <div id="receiptPrintArea" class="space-y-4 text-gray-800">
+                <div class="text-center border-b pb-3">
+                    <h2 class="festive-title font-bold text-lg text-festiveRed">DURGA PUJA SAMITI SOMBARIHATPARA</h2>
+                    <p class="text-xs font-bold text-amber-700 uppercase tracking-widest">HOD DEPOSIT RECEIPT</p>
+                </div>
+                <div class="grid grid-cols-2 text-xs gap-2 border-b pb-3">
+                    <div><strong>Slip ID:</strong> <span id="recSlipId" class="font-mono text-festiveRed"></span></div>
+                    <div><strong>Date:</strong> <span id="recDate"></span></div>
+                    <div><strong>Handed By:</strong> <span id="recBy"></span></div>
+                    <div><strong>Received By (HOD):</strong> <span id="recTo"></span></div>
+                </div>
+                <div class="text-xs space-y-1 bg-gray-50 p-3 rounded-lg border">
+                    <div class="flex justify-between"><span>Cash Amount:</span> <strong id="recCash"></strong></div>
+                    <div class="flex justify-between"><span>UPI Amount:</span> <strong id="recUpi"></strong></div>
+                    <div class="flex justify-between border-t pt-1 font-bold text-sm text-festiveRed"><span>Total Amount:</span> <strong id="recTotal"></strong></div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 pt-4 text-center text-xs">
+                    <div>
+                        <div class="h-16 border-b flex items-end justify-center pb-1"><img id="recBySigImg" class="max-h-14 object-contain" /></div>
+                        <p class="font-bold mt-1">Depositor Signature</p>
+                    </div>
+                    <div>
+                        <div class="h-16 border-b flex items-end justify-center pb-1"><img id="recHodSigImg" class="max-h-14 object-contain" /></div>
+                        <p class="font-bold mt-1">HOD / Receiver Signature</p>
+                    </div>
+                </div>
+                <div class="text-center text-[10px] text-gray-500 pt-2 border-t font-mono">Status: Verified & Accepted • Samiti Seal Space</div>
+            </div>
+            <div class="mt-6 pt-4 border-t flex justify-end space-x-3 no-print">
+                <button type="button" onclick="closeModal('receiptModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Close</button>
+                <button type="button" onclick="printAndLogReceipt()" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase"><i class="fa-solid fa-print mr-1"></i> Print / PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Modal (Create / Edit) -->
+    <div id="userModal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-t-4 border-festiveRed">
+            <div class="flex items-center justify-between pb-3 border-b">
+                <h3 id="userModalTitle" class="festive-title font-bold text-lg text-festiveRed">Create Committee User</h3>
+                <button onclick="closeModal('userModal')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveUser(event)" class="mt-4 space-y-4">
+                <input type="hidden" id="userId">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Full Name</label>
+                        <input type="text" id="usrName" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Mobile Number</label>
+                        <input type="text" id="usrPhone" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Username</label>
+                        <input type="text" id="usrUsername" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                        <input type="text" id="usrPassword" required class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">System Role</label>
+                    <select id="usrRole" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm">
+                        <option value="ADMIN">ADMIN (Full Control)</option>
+                        <option value="CO-LEADER">CO-LEADER</option>
+                        <option value="LEADER">LEADER</option>
+                        <option value="MEMBER">MEMBER</option>
+                    </select>
+                </div>
+                <div class="pt-4 border-t flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('userModal')" class="px-4 py-2 rounded-lg border text-xs font-bold uppercase">Cancel</button>
+                    <button type="submit" class="bg-festiveRed text-festiveGold px-6 py-2 rounded-lg text-xs font-bold uppercase">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        let currentUser = null;
+        let tempDepositData = {};
+
+        window.onload = async function() {
+            setupSignatureCanvas('hodSigCanvas');
+            setupSignatureCanvas('bySigCanvas');
+
+            const savedUser = getStorage(STORAGE_KEYS.CURRENT_USER, null);
+            if (savedUser) {
+                currentUser = savedUser;
+                document.getElementById('loginSection').classList.add('hidden');
+                initApp();
+            } else {
+                document.getElementById('loginSection').classList.remove('hidden');
+            }
+
+            await fetchAllDataFromSheet();
+            backupAllLocalDataToSheet();
+        };
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUsername').value.trim();
+            const p = document.getElementById('loginPassword').value.trim();
+            
+            let users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS).filter(x => x.status !== 'Deleted');
+            let found = users.find(x => x.username.toLowerCase() === u.toLowerCase() && x.password === p);
+
+            if (!found) {
+                await fetchAllDataFromSheet();
+                users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS).filter(x => x.status !== 'Deleted');
+                found = users.find(x => x.username.toLowerCase() === u.toLowerCase() && x.password === p);
+            }
+
+            if (found) {
+                currentUser = found;
+                setStorage(STORAGE_KEYS.CURRENT_USER, found);
+                document.getElementById('loginError').classList.add('hidden');
+                document.getElementById('loginSection').classList.add('hidden');
+                logUserActivity('LOGIN', `User ${found.username} (${found.name}) logged in`);
+                initApp();
+            } else {
+                const err = document.getElementById('loginError');
+                err.textContent = 'Invalid Username or Password!';
+                err.classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            if (!confirm('Are you sure you want to logout?')) return;
+            logUserActivity('LOGOUT', `User ${currentUser ? currentUser.username : ''} logged out`);
+            localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+            currentUser = null;
+            window.location.reload();
+        }
+
+        function updateHeaderAndProfileUI() {
+            if (!currentUser) return;
+            const fallbackAvatar = 'https://placehold.co/150x150/8B0000/D4AF37?text=' + encodeURIComponent((currentUser.name || 'U').charAt(0));
+            const avatarUrl = currentUser.photo || fallbackAvatar;
+
+            document.getElementById('navUserName').textContent = currentUser.name;
+            document.getElementById('navUserRole').textContent = currentUser.role;
+            document.getElementById('navUserPhoto').src = avatarUrl;
+            document.getElementById('sbUserName').textContent = currentUser.name;
+            document.getElementById('sbUserPhone').textContent = currentUser.phone;
+            document.getElementById('sbUserRoleBadge').textContent = currentUser.role;
+            document.getElementById('sbUserPhoto').src = avatarUrl;
+
+            document.getElementById('profName').value = currentUser.name || '';
+            document.getElementById('profPhone').value = currentUser.phone || '';
+            document.getElementById('profUsername').value = currentUser.username || '';
+            document.getElementById('profPassword').value = currentUser.password || '';
+            document.getElementById('profileNameDisplay').textContent = currentUser.name || '';
+            document.getElementById('profileRoleBadge').textContent = currentUser.role || '';
+            document.getElementById('profileAvatar').src = avatarUrl;
+        }
+
+        function initApp() {
+            document.getElementById('appContainer').classList.remove('hidden');
+            updateHeaderAndProfileUI();
+
+            document.getElementById('navTrashBtn').classList.remove('hidden');
+
+            if (currentUser.role === 'ADMIN') {
+                document.getElementById('navUsersBtn').classList.remove('hidden');
+                document.getElementById('editNoticeBtn').classList.remove('hidden');
+            }
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            ['cDate', 'kDate', 'dDate'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.value) el.value = todayStr;
+            });
+
+            updateVillageSuggestions();
+            loadNoticeData();
+            refreshAllData();
+            switchTab('dashboard');
+        }
+
+        function toggleSidebar() {
+            const drawer = document.getElementById('sidebarDrawer');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (drawer.classList.contains('-translate-x-full')) {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('tab-' + tabId);
+            if (target) target.classList.remove('hidden');
+
+            const drawer = document.getElementById('sidebarDrawer');
+            if (!drawer.classList.contains('-translate-x-full')) {
+                toggleSidebar();
+            }
+
+            if (tabId === 'dashboard') { refreshAllData(); loadNoticeData(); }
+            if (tabId === 'chanda') renderChandaTable();
+            if (tabId === 'kharch') renderKharchTable();
+            if (tabId === 'deposit') renderDepositTable();
+            if (tabId === 'users') renderUsersTable();
+            if (tabId === 'trash') renderTrashTable();
+            if (tabId === 'profile') updateHeaderAndProfileUI();
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function openNoticeModal() {
+            const notice = getStorage(STORAGE_KEYS.NOTICE, {});
+            document.getElementById('notTitle').value = notice.title || '';
+            document.getElementById('notMessage').value = notice.message || '';
+            document.getElementById('notIssuer').value = notice.issuedBy || '';
+            openModal('noticeModal');
+        }
+
+        function saveNotice(e) {
+            e.preventDefault();
+            const updatedNotice = {
+                id: 'MAIN_NOTICE',
+                title: document.getElementById('notTitle').value.trim(),
+                message: document.getElementById('notMessage').value.trim(),
+                issuedBy: document.getElementById('notIssuer').value.trim(),
+                updatedAt: new Date().toLocaleString()
+            };
+            setStorage(STORAGE_KEYS.NOTICE, updatedNotice);
+            syncToGoogleSheets('UPDATE', 'NOTICE', updatedNotice);
+            logUserActivity('UPDATE_NOTICE', `Notice updated: ${updatedNotice.title}`);
+            closeModal('noticeModal');
+            loadNoticeData();
+            alert('Notice updated & synced to Google Sheets!');
+        }
+
+        function loadNoticeData() {
+            const notice = getStorage(STORAGE_KEYS.NOTICE, {});
+            document.getElementById('noticeTitleDisplay').textContent = notice.title || 'Puja Countdown Notice:';
+            document.getElementById('noticeMessageDisplay').textContent = notice.message || '';
+            document.getElementById('noticeIssuerDisplay').textContent = notice.issuedBy || 'Samiti Admin';
+        }
+
+        function setupSignatureCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let painting = false;
+
+            function startPosition(e) { painting = true; draw(e); }
+            function finishedPosition() { painting = false; ctx.beginPath(); }
+            function draw(e) {
+                if (!painting) return;
+                if (e.cancelable) e.preventDefault();
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000';
+
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', finishedPosition);
+            canvas.addEventListener('mousemove', draw);
+
+            canvas.addEventListener('touchstart', startPosition, { passive: false });
+            canvas.addEventListener('touchend', finishedPosition);
+            canvas.addEventListener('touchmove', draw, { passive: false });
+        }
+
+        function clearSig(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function openChandaModal() {
+            document.getElementById('chandaModalTitle').textContent = 'Add Chanda Collection';
+            document.getElementById('cName').value = '';
+            document.getElementById('cLastYear').value = '';
+            document.getElementById('cSlip').value = '';
+            document.getElementById('cAmount').value = '';
+            document.getElementById('chandaId').value = '';
+            document.getElementById('cDate').value = new Date().toISOString().split('T')[0];
+            
+            // Reset village dropdown & custom input
+            populateVillageDropdown('');
+            openModal('chandaModal');
+        }
+
+        function populateVillageDropdown(selectedVillage) {
+            const villages = getStorage(STORAGE_KEYS.VILLAGES, NEW_VILLAGES_LIST);
+            const selectEl = document.getElementById('cVillageSelect');
+            const customEl = document.getElementById('cVillageCustom');
+            
+            let options = `<option value="">-- Choose Village --</option>`;
+            villages.forEach(v => {
+                options += `<option value="${v}">${v}</option>`;
+            });
+            options += `<option value="OTHER_CUSTOM" style="font-weight:bold; color:#8B0000;">+ Type Other / Outside Village...</option>`;
+            
+            if (selectEl) {
+                selectEl.innerHTML = options;
+                if (selectedVillage && villages.includes(selectedVillage)) {
+                    selectEl.value = selectedVillage;
+                    customEl.classList.add('hidden');
+                    customEl.value = '';
+                } else if (selectedVillage) {
+                    selectEl.value = 'OTHER_CUSTOM';
+                    customEl.classList.remove('hidden');
+                    customEl.value = selectedVillage;
+                } else {
+                    selectEl.value = '';
+                    customEl.classList.add('hidden');
+                    customEl.value = '';
+                }
+            }
+        }
+
+        function onVillageSelectChange(sel) {
+            const customEl = document.getElementById('cVillageCustom');
+            if (sel.value === 'OTHER_CUSTOM') {
+                customEl.classList.remove('hidden');
+                customEl.value = '';
+                customEl.focus();
+            } else {
+                customEl.classList.add('hidden');
+                customEl.value = sel.value;
+            }
+            autoFillLastYear();
+        }
+
+        function openKharchModal() {
+            document.getElementById('kPurpose').value = '';
+            document.getElementById('kBy').value = '';
+            document.getElementById('kAmount').value = '';
+            document.getElementById('kDate').value = new Date().toISOString().split('T')[0];
+            openModal('kharchModal');
+        }
+        
+        function openDepositModal() {
+            document.getElementById('dTo').value = '';
+            document.getElementById('dBy').value = currentUser ? currentUser.name : '';
+            document.getElementById('dCash').value = '';
+            document.getElementById('dUpi').value = '';
+            document.getElementById('dDate').value = new Date().toISOString().split('T')[0];
+            openModal('depositModal');
+        }
+
+        function handleDepositFormSubmit(e) {
+            e.preventDefault();
+            tempDepositData = {
+                to: document.getElementById('dTo').value.trim(),
+                by: document.getElementById('dBy').value.trim(),
+                cash: parseFloat(document.getElementById('dCash').value) || 0,
+                upi: parseFloat(document.getElementById('dUpi').value) || 0,
+                date: document.getElementById('dDate').value
+            };
+
+            closeModal('depositModal');
+            clearSig('hodSigCanvas');
+            openModal('hodSigModal');
+        }
+
+        function proceedToDepositorSig() {
+            const canvas = document.getElementById('hodSigCanvas');
+            tempDepositData.hodSig = canvas.toDataURL();
+
+            closeModal('hodSigModal');
+            clearSig('bySigCanvas');
+            openModal('bySigModal');
+        }
+
+        function finalizeDepositProcess() {
+            const canvas = document.getElementById('bySigCanvas');
+            tempDepositData.bySig = canvas.toDataURL();
+
+            let rawList = getRawDepositList();
+            const seq = rawList.length + 1;
+            const depositItem = {
+                id: 'HOD-2026-' + String(seq).padStart(3, '0') + '-' + Math.floor(100 + Math.random() * 900),
+                slipId: 'DP-' + Math.floor(100000 + Math.random() * 900000),
+                to: tempDepositData.to,
+                by: tempDepositData.by,
+                cash: tempDepositData.cash,
+                upi: tempDepositData.upi,
+                date: tempDepositData.date,
+                total: tempDepositData.cash + tempDepositData.upi,
+                hodSig: tempDepositData.hodSig,
+                bySig: tempDepositData.bySig,
+                createdBy: currentUser ? currentUser.username : 'system',
+                status: 'Active',
+                syncStatus: 'Synced'
+            };
+
+            rawList.unshift(depositItem);
+            setDepositList(rawList);
+            syncToGoogleSheets('ADD', 'DEPOSIT', depositItem);
+            logUserActivity('ADD_DEPOSIT', `HOD Handover ${depositItem.slipId} of ₹${depositItem.total} to ${depositItem.to}`);
+            
+            closeModal('bySigModal');
+            refreshAllData();
+            renderDepositTable();
+            showReceiptModal(depositItem);
+        }
+
+        function printAndLogReceipt() {
+            const slipId = document.getElementById('recSlipId').textContent;
+            logUserActivity('PRINT_PDF_RECEIPT', `Printed/Exported PDF for HOD Deposit Slip ${slipId}`);
+            window.print();
+        }
+
+        function openUserModal() {
+            document.getElementById('userModalTitle').textContent = 'Create Committee User';
+            document.getElementById('userId').value = '';
+            document.getElementById('usrName').value = '';
+            document.getElementById('usrPhone').value = '';
+            document.getElementById('usrUsername').value = '';
+            document.getElementById('usrPassword').value = '';
+            openModal('userModal');
+        }
+
+        function getChandaList() { return getStorage(STORAGE_KEYS.CHANDA, []).filter(x => x.status !== 'Deleted'); }
+        function getRawChandaList() { return getStorage(STORAGE_KEYS.CHANDA, []); }
+        function setChandaList(list) { setStorage(STORAGE_KEYS.CHANDA, list); }
+
+        function getKharchList() { return getStorage(STORAGE_KEYS.KHARCH, []).filter(x => x.status !== 'Deleted'); }
+        function getRawKharchList() { return getStorage(STORAGE_KEYS.KHARCH, []); }
+        function setKharchList(list) { setStorage(STORAGE_KEYS.KHARCH, list); }
+
+        function getDepositList() { return getStorage(STORAGE_KEYS.DEPOSIT, []).filter(x => x.status !== 'Deleted'); }
+        function getRawDepositList() { return getStorage(STORAGE_KEYS.DEPOSIT, []); }
+        function setDepositList(list) { setStorage(STORAGE_KEYS.DEPOSIT, list); }
+
+        function updateVillageSuggestions() {
+            const villages = getStorage(STORAGE_KEYS.VILLAGES, NEW_VILLAGES_LIST);
+            const filterSel = document.getElementById('chandaVillageFilter');
+            if (filterSel) {
+                const currentVal = filterSel.value;
+                filterSel.innerHTML = `<option value="">All Villages</option>` + villages.map(v => `<option value="${v}">${v}</option>`).join('');
+                filterSel.value = currentVal;
+            }
+        }
+
+        function autoFillLastYear() {
+            const nameInput = document.getElementById('cName').value.trim().toLowerCase();
+            const selectEl = document.getElementById('cVillageSelect');
+            const customEl = document.getElementById('cVillageCustom');
+            let villageInput = '';
+            if (selectEl.value === 'OTHER_CUSTOM') {
+                villageInput = (customEl.value || '').trim().toLowerCase();
+            } else {
+                villageInput = (selectEl.value || '').trim().toLowerCase();
+            }
+
+            const lastYearInput = document.getElementById('cLastYear');
+
+            if (!nameInput) {
+                lastYearInput.value = '';
+                return;
+            }
+
+            const oldData = getStorage(STORAGE_KEYS.OLD_CHANDA, []);
+            const match = oldData.find(x => x.name.toLowerCase() === nameInput && (!villageInput || x.village.toLowerCase() === villageInput));
+
+            if (match) {
+                lastYearInput.value = match.amount;
+            } else {
+                const partialMatch = oldData.find(x => x.name.toLowerCase().includes(nameInput) || nameInput.includes(x.name.toLowerCase()));
+                lastYearInput.value = partialMatch ? partialMatch.amount : 0;
+            }
+        }
+
+        function saveChanda(e) {
+            e.preventDefault();
+            const id = document.getElementById('chandaId').value;
+            const name = document.getElementById('cName').value.trim();
+            
+            const selectEl = document.getElementById('cVillageSelect');
+            const customEl = document.getElementById('cVillageCustom');
+            let village = '';
+            if (selectEl.value === 'OTHER_CUSTOM') {
+                village = customEl.value.trim();
+            } else {
+                village = selectEl.value.trim();
+            }
+
+            if (!village) {
+                alert('Please select or type a village name!');
+                return;
+            }
+
+            const lastYear = parseFloat(document.getElementById('cLastYear').value) || 0;
+            const slip = parseFloat(document.getElementById('cSlip').value) || 0;
+            const amount = parseFloat(document.getElementById('cAmount').value) || 0;
+            const type = document.getElementById('cType').value;
+            const source = document.getElementById('cSource').value;
+            const date = document.getElementById('cDate').value;
+
+            // Save new/outside village to storage list automatically
+            const villages = getStorage(STORAGE_KEYS.VILLAGES, NEW_VILLAGES_LIST);
+            if (village && !villages.includes(village)) {
+                villages.push(village);
+                setStorage(STORAGE_KEYS.VILLAGES, villages);
+                updateVillageSuggestions();
+            }
+
+            let list = getRawChandaList();
+
+            if (id) {
+                const idx = list.findIndex(x => x.id === id);
+                if (idx !== -1) {
+                    list[idx] = { id, name, village, lastYear, slip, amount, type, source, date, status: 'Active' };
+                    syncToGoogleSheets('UPDATE', 'CHANDA', list[idx]);
+                    logUserActivity('EDIT_CHANDA', `Updated Chanda for ${name} (${village}) Slip: ₹${slip}, Paid: ₹${amount}`);
+                }
+            } else {
+                const newItem = {
+                    id: 'CHD-' + Math.floor(100000 + Math.random() * 900000),
+                    name, village, lastYear, slip, amount, type, source, date,
+                    status: 'Active'
+                };
+                list.unshift(newItem);
+                syncToGoogleSheets('ADD', 'CHANDA', newItem);
+                logUserActivity('ADD_CHANDA', `Collected Chanda from ${name} (${village}) Slip: ₹${slip}, Paid: ₹${amount}`);
+            }
+
+            setChandaList(list);
+            closeModal('chandaModal');
+            refreshAllData();
+            renderChandaTable();
+        }
+
+        function renderChandaTable() {
+            const search = (document.getElementById('chandaSearch')?.value || '').toLowerCase();
+            const villageFilter = document.getElementById('chandaVillageFilter')?.value || '';
+            const list = getChandaList();
+
+            const filtered = list.filter(x => {
+                const matchSearch = (x.name || '').toLowerCase().includes(search) || (x.village || '').toLowerCase().includes(search) || (x.id || '').toLowerCase().includes(search);
+                const matchVillage = !villageFilter || x.village === villageFilter;
+                return matchSearch && matchVillage;
+            });
+
+            const tbody = document.getElementById('chandaTableBody');
+            if (!tbody) return;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-400">No Chanda records found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(x => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 font-mono text-xs text-gray-500">${x.id}</td>
+                    <td class="p-3">
+                        <div class="font-bold text-gray-800 capitalize">${x.name}</div>
+                        <div class="text-xs text-gray-500"><i class="fa-solid fa-location-dot mr-1"></i>${x.village}</div>
+                    </td>
+                    <td class="p-3 font-mono text-gray-600">₹${x.lastYear || 0}</td>
+                    <td class="p-3 font-mono font-semibold text-amber-800">₹${x.slip || 0}</td>
+                    <td class="p-3 font-mono font-bold text-festiveRed">₹${x.amount}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 text-xs rounded bg-amber-100 text-amber-800 font-medium">${x.type}</span>
+                        <div class="text-[10px] text-gray-400 mt-0.5">${x.source} • ${x.date}</div>
+                    </td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="editChanda('${x.id}')" class="text-blue-600 hover:text-blue-800 text-xs font-bold"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteRecord('CHANDA', '${x.id}')" class="text-red-600 hover:text-red-800 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editChanda(id) {
+            const list = getRawChandaList();
+            const item = list.find(x => x.id === id);
+            if (!item) return;
+
+            document.getElementById('chandaModalTitle').textContent = 'Edit Chanda Collection';
+            document.getElementById('chandaId').value = item.id;
+            document.getElementById('cName').value = item.name;
+            
+            populateVillageDropdown(item.village);
+
+            document.getElementById('cLastYear').value = item.lastYear || 0;
+            document.getElementById('cSlip').value = item.slip || 0;
+            document.getElementById('cAmount').value = item.amount;
+            document.getElementById('cType').value = item.type;
+            document.getElementById('cSource').value = item.source;
+            document.getElementById('cDate').value = item.date;
+
+            openModal('chandaModal');
+        }
+
+        function saveKharch(e) {
+            e.preventDefault();
+            const purpose = document.getElementById('kPurpose').value.trim();
+            const incurredBy = document.getElementById('kBy').value.trim();
+            const amount = parseFloat(document.getElementById('kAmount').value) || 0;
+            const type = document.getElementById('kType').value;
+            const date = document.getElementById('kDate').value;
+
+            let list = getRawKharchList();
+            const newItem = {
+                id: 'KHR-' + Math.floor(100000 + Math.random() * 900000),
+                purpose, incurredBy, amount, type, date,
+                createdBy: currentUser ? currentUser.username : 'system',
+                status: 'Active',
+                syncStatus: 'Synced'
+            };
+
+            list.unshift(newItem);
+            setKharchList(list);
+            syncToGoogleSheets('ADD', 'KHARCH', newItem);
+            logUserActivity('ADD_KHARCH', `Added Expense: ${purpose} (₹${amount}) by ${incurredBy}`);
+
+            closeModal('kharchModal');
+            refreshAllData();
+            renderKharchTable();
+        }
+
+        function renderKharchTable() {
+            const list = getKharchList();
+            const tbody = document.getElementById('kharchTableBody');
+            if (!tbody) return;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No expense records found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map(x => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 font-bold text-gray-800">${x.purpose}</td>
+                    <td class="p-3 text-gray-600">${x.incurredBy}</td>
+                    <td class="p-3 font-mono font-bold text-amber-700">₹${x.amount}</td>
+                    <td class="p-3 text-xs text-gray-500">${x.type} • ${x.date}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-100 text-emerald-800">${x.syncStatus || 'Synced'}</span></td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteRecord('KHARCH', '${x.id}')" class="text-red-600 hover:text-red-800 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderDepositTable() {
+            const list = getDepositList();
+            const tbody = document.getElementById('depositTableBody');
+            if (!tbody) return;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No HOD deposit records found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map(x => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 font-mono font-bold text-festiveRed">${x.slipId}</td>
+                    <td class="p-3">
+                        <div class="font-bold text-gray-800">To: ${x.to}</div>
+                        <div class="text-xs text-gray-500">By: ${x.by} • ${x.date}</div>
+                    </td>
+                    <td class="p-3 text-xs">Cash: ₹${x.cash} | UPI: ₹${x.upi}</td>
+                    <td class="p-3 font-mono font-bold text-blue-700">₹${x.total}</td>
+                    <td class="p-3">
+                        <button onclick="showReceiptById('${x.id}')" class="text-xs bg-blue-50 text-blue-700 font-bold px-2.5 py-1 rounded hover:bg-blue-100"><i class="fa-solid fa-file-lines mr-1"></i> View Slip</button>
+                    </td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteRecord('DEPOSIT', '${x.id}')" class="text-red-600 hover:text-red-800 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showReceiptById(id) {
+            const list = getRawDepositList();
+            const item = list.find(x => x.id === id);
+            if (item) showReceiptModal(item);
+        }
+
+        function showReceiptModal(item) {
+            document.getElementById('recSlipId').textContent = item.slipId;
+            document.getElementById('recDate').textContent = item.date;
+            document.getElementById('recBy').textContent = item.by;
+            document.getElementById('recTo').textContent = item.to;
+            document.getElementById('recCash').textContent = '₹' + item.cash;
+            document.getElementById('recUpi').textContent = '₹' + item.upi;
+            document.getElementById('recTotal').textContent = '₹' + item.total;
+            document.getElementById('recBySigImg').src = item.bySig || '';
+            document.getElementById('recHodSigImg').src = item.hodSig || '';
+            openModal('receiptModal');
+        }
+
+        function showReceiptData(item) { showReceiptModal(item); }
+
+        function renderUsersTable() {
+            const users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS).filter(x => x.status !== 'Deleted');
+            const tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = users.map(x => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 flex items-center space-x-3">
+                        <img src="${x.photo || 'https://placehold.co/100x100'}" class="w-8 h-8 rounded-full object-cover">
+                        <span class="font-bold text-gray-800">${x.name}</span>
+                    </td>
+                    <td class="p-3 font-mono text-xs text-gray-600">${x.username}</td>
+                    <td class="p-3 text-xs text-gray-600">${x.phone}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 text-[10px] font-bold rounded bg-red-100 text-festiveRed">${x.role}</span></td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="editUser('${x.id}')" class="text-blue-600 hover:text-blue-800 text-xs font-bold"><i class="fa-solid fa-pen"></i></button>
+                        ${x.username !== 'admin' ? `<button onclick="deleteUser('${x.id}')" class="text-red-600 hover:text-red-800 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function saveUser(e) {
+            e.preventDefault();
+            const id = document.getElementById('userId').value;
+            const name = document.getElementById('usrName').value.trim();
+            const phone = document.getElementById('usrPhone').value.trim();
+            const username = document.getElementById('usrUsername').value.trim();
+            const password = document.getElementById('usrPassword').value.trim();
+            const role = document.getElementById('usrRole').value;
+
+            let users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+
+            const duplicate = users.find(u => u.username.toLowerCase() === username.toLowerCase() && u.id !== id && u.status !== 'Deleted');
+            if (duplicate) {
+                alert('Username already exists! Please choose a unique username.');
+                return;
+            }
+
+            if (id) {
+                const idx = users.findIndex(x => x.id === id);
+                if (idx !== -1) {
+                    users[idx] = { ...users[idx], name, phone, username, password, role, status: 'Active' };
+                    syncToGoogleSheets('UPDATE_USER', 'USERS', users[idx]);
+                    logUserActivity('EDIT_USER', `Updated user account: ${username} (${role})`);
+                    if (currentUser && currentUser.id === id) {
+                        currentUser = users[idx];
+                        setStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
+                        updateHeaderAndProfileUI();
+                    }
+                }
+            } else {
+                const newUser = {
+                    id: 'usr_' + Date.now(),
+                    name, phone, username, password, role,
+                    status: 'Active',
+                    photo: 'https://placehold.co/150x150/8B0000/D4AF37?text=' + encodeURIComponent(name.charAt(0))
+                };
+                users.push(newUser);
+                syncToGoogleSheets('ADD_USER', 'USERS', newUser);
+                logUserActivity('CREATE_USER', `Created new user account: ${username} (${role})`);
+            }
+
+            setStorage(STORAGE_KEYS.USERS, users);
+            closeModal('userModal');
+            renderUsersTable();
+            alert('User saved & synced to Google Sheets!');
+        }
+
+        function editUser(id) {
+            const users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+            const user = users.find(x => x.id === id);
+            if (!user) return;
+
+            document.getElementById('userModalTitle').textContent = 'Edit Committee User';
+            document.getElementById('userId').value = user.id;
+            document.getElementById('usrName').value = user.name;
+            document.getElementById('usrPhone').value = user.phone;
+            document.getElementById('usrUsername').value = user.username;
+            document.getElementById('usrPassword').value = user.password;
+            document.getElementById('usrRole').value = user.role;
+
+            openModal('userModal');
+        }
+
+        function deleteUser(id) {
+            deleteRecord('USERS', id);
+        }
+
+        function deleteRecord(moduleName, id) {
+            if (!confirm('Move this record to Recycle Bin?')) return;
+            
+            let targetList, setTargetFunc;
+            if (moduleName === 'CHANDA') { targetList = getRawChandaList(); setTargetFunc = setChandaList; }
+            else if (moduleName === 'KHARCH') { targetList = getRawKharchList(); setTargetFunc = setKharchList; }
+            else if (moduleName === 'DEPOSIT') { targetList = getRawDepositList(); setTargetFunc = setDepositList; }
+            else if (moduleName === 'USERS') {
+                targetList = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+                setTargetFunc = (list) => setStorage(STORAGE_KEYS.USERS, list);
+            }
+
+            const itemIdx = targetList.findIndex(x => x.id === id);
+            if (itemIdx === -1) return;
+
+            const deletedItem = targetList[itemIdx];
+            deletedItem.status = 'Deleted';
+            deletedItem.deletedAt = new Date().toLocaleString();
+            deletedItem.deletedBy = currentUser ? currentUser.username : 'system';
+            setTargetFunc(targetList);
+
+            syncToGoogleSheets('MOVE_TO_TRASH', moduleName, deletedItem);
+
+            let trash = getStorage(STORAGE_KEYS.TRASH, []);
+            const trashEntry = {
+                id: 'TRASH-' + deletedItem.id,
+                module: moduleName,
+                item: deletedItem,
+                deletedAt: deletedItem.deletedAt,
+                status: 'InTrash'
+            };
+            trash.unshift(trashEntry);
+            setStorage(STORAGE_KEYS.TRASH, trash);
+            syncToGoogleSheets('ADD_TRASH', 'TRASH', trashEntry);
+            logUserActivity('DELETE_TO_TRASH', `Moved ${moduleName} record to Recycle Bin`);
+
+            refreshAllData();
+            if (moduleName === 'CHANDA') renderChandaTable();
+            if (moduleName === 'KHARCH') renderKharchTable();
+            if (moduleName === 'DEPOSIT') renderDepositTable();
+            if (moduleName === 'USERS') renderUsersTable();
+            renderTrashTable();
+        }
+
+        function renderTrashTable() {
+            const trash = getStorage(STORAGE_KEYS.TRASH, []).filter(t => t.status !== 'Restored');
+            const tbody = document.getElementById('trashTableBody');
+            if (!tbody) return;
+
+            if (trash.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">Recycle bin is empty.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = trash.map((t) => {
+                const label = t.item.name || t.item.purpose || t.item.slipId || t.item.username || 'Record';
+                const amt = t.item.amount || t.item.total ? ` (₹${t.item.amount || t.item.total})` : '';
+                return `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 font-bold text-xs uppercase text-festiveRed">${t.module}</td>
+                    <td class="p-3 text-xs text-gray-700">${label}${amt}</td>
+                    <td class="p-3 text-xs text-gray-500">${t.item.deletedAt || t.deletedAt || 'N/A'}</td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="restoreTrashById('${t.item.id}', '${t.module}')" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-3 py-1 rounded text-xs font-bold"><i class="fa-solid fa-rotate-left mr-1"></i> Restore</button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function restoreTrashById(itemId, moduleName) {
+            let trash = getStorage(STORAGE_KEYS.TRASH, []);
+            const index = trash.findIndex(t => t.item && t.item.id === itemId && t.module === moduleName);
+            if (index === -1) return;
+            const t = trash[index];
+
+            let targetList, setTargetFunc;
+            if (t.module === 'CHANDA') { targetList = getRawChandaList(); setTargetFunc = setChandaList; }
+            else if (t.module === 'KHARCH') { targetList = getRawKharchList(); setTargetFunc = setKharchList; }
+            else if (t.module === 'DEPOSIT') { targetList = getRawDepositList(); setTargetFunc = setDepositList; }
+            else if (t.module === 'USERS') {
+                targetList = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+                setTargetFunc = (list) => setStorage(STORAGE_KEYS.USERS, list);
+            }
+
+            t.item.status = 'Active';
+            delete t.item.deletedAt;
+
+            const existingIdx = targetList.findIndex(x => x.id === t.item.id);
+            if (existingIdx !== -1) {
+                targetList[existingIdx] = t.item;
+            } else {
+                targetList.unshift(t.item);
+            }
+            setTargetFunc(targetList);
+            syncToGoogleSheets('RESTORE', t.module, t.item);
+
+            trash[index].status = 'Restored';
+            syncToGoogleSheets('RESTORE_TRASH', 'TRASH', trash[index]);
+            trash.splice(index, 1);
+            setStorage(STORAGE_KEYS.TRASH, trash);
+
+            logUserActivity('RESTORE_FROM_TRASH', `Restored ${t.module} record from Recycle Bin`);
+
+            refreshAllData();
+            renderTrashTable();
+            renderChandaTable();
+            renderKharchTable();
+            renderDepositTable();
+            renderUsersTable();
+            alert('Record restored successfully!');
+        }
+
+        function updateProfile(e) {
+            if (e) e.preventDefault();
+            if (!currentUser) return;
+
+            const newName = document.getElementById('profName').value.trim();
+            const newPhone = document.getElementById('profPhone').value.trim();
+            const newUsername = document.getElementById('profUsername').value.trim();
+            const newPassword = document.getElementById('profPassword').value.trim();
+
+            if (!newName || !newPhone || !newUsername || !newPassword) {
+                alert('Please fill all profile fields!');
+                return;
+            }
+
+            let users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+            const duplicate = users.find(u => u.username.toLowerCase() === newUsername.toLowerCase() && u.id !== currentUser.id && u.status !== 'Deleted');
+            if (duplicate) {
+                alert('This username is already taken by another member!');
+                return;
+            }
+
+            currentUser.name = newName;
+            currentUser.phone = newPhone;
+            currentUser.username = newUsername;
+            currentUser.password = newPassword;
+            currentUser.updatedAt = new Date().toLocaleString();
+
+            const idx = users.findIndex(x => x.id === currentUser.id || x.username === currentUser.username);
+            if (idx !== -1) {
+                users[idx] = { ...users[idx], ...currentUser };
+            } else {
+                users.push(currentUser);
+            }
+
+            setStorage(STORAGE_KEYS.USERS, users);
+            setStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
+
+            syncToGoogleSheets('UPDATE_PROFILE', 'USERS', currentUser);
+            logUserActivity('UPDATE_PROFILE', `Updated profile for ${currentUser.username} (${currentUser.name})`);
+
+            updateHeaderAndProfileUI();
+            renderUsersTable();
+
+            const msgBox = document.getElementById('profileSaveMsg');
+            if (msgBox) {
+                msgBox.classList.remove('hidden');
+                setTimeout(() => msgBox.classList.add('hidden'), 4000);
+            }
+            alert('Profile saved & synced to Google Sheets successfully!');
+        }
+
+        function handleProfilePhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 200;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > h) {
+                        if (w > maxDim) { h = Math.round(h * (maxDim / w)); w = maxDim; }
+                    } else {
+                        if (h > maxDim) { w = Math.round(w * (maxDim / h)); h = maxDim; }
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+                    currentUser.photo = compressedDataUrl;
+                    document.getElementById('profileAvatar').src = currentUser.photo;
+
+                    let users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+                    const idx = users.findIndex(x => x.id === currentUser.id);
+                    if (idx !== -1) {
+                        users[idx] = currentUser;
+                    } else {
+                        users.push(currentUser);
+                    }
+                    setStorage(STORAGE_KEYS.USERS, users);
+                    setStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
+                    syncToGoogleSheets('UPDATE_PROFILE_PHOTO', 'USERS', currentUser);
+                    logUserActivity('UPDATE_PHOTO', `Updated profile photo for ${currentUser.username}`);
+                    updateHeaderAndProfileUI();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeProfilePhoto() {
+            currentUser.photo = 'https://placehold.co/150x150/8B0000/D4AF37?text=' + encodeURIComponent(currentUser.name.charAt(0));
+            let users = getStorage(STORAGE_KEYS.USERS, DEFAULT_USERS);
+            const idx = users.findIndex(x => x.id === currentUser.id);
+            if (idx !== -1) {
+                users[idx] = currentUser;
+                setStorage(STORAGE_KEYS.USERS, users);
+            }
+            setStorage(STORAGE_KEYS.CURRENT_USER, currentUser);
+            syncToGoogleSheets('REMOVE_PROFILE_PHOTO', 'USERS', currentUser);
+            updateHeaderAndProfileUI();
+        }
+
+        function refreshAllData() {
+            const chandaList = getChandaList();
+            const kharchList = getKharchList();
+            const depositList = getDepositList();
+
+            const totalChanda = chandaList.reduce((acc, x) => acc + (parseFloat(x.amount) || 0), 0);
+            const totalKharch = kharchList.reduce((acc, x) => acc + (parseFloat(x.amount) || 0), 0);
+            const totalDeposit = depositList.reduce((acc, x) => acc + (parseFloat(x.total) || 0), 0);
+
+            const balanceInHand = totalChanda - totalKharch - totalDeposit;
+            const totalDonors = chandaList.length;
+
+            document.getElementById('dashTotalChanda').textContent = '₹' + totalChanda;
+            document.getElementById('dashTotalKharch').textContent = '₹' + totalKharch;
+            document.getElementById('dashTotalDeposit').textContent = '₹' + totalDeposit;
+            document.getElementById('dashBalanceInHand').textContent = '₹' + balanceInHand;
+            document.getElementById('dashTotalDonors').textContent = totalDonors;
+
+            const recentBody = document.getElementById('dashRecentChandaBody');
+            if (recentBody) {
+                const recent = chandaList.slice(0, 5);
+                if (recent.length === 0) {
+                    recentBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">No collections recorded yet.</td></tr>`;
+                } else {
+                    recentBody.innerHTML = recent.map(x => `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3">
+                                <div class="font-bold text-gray-800 capitalize">${x.name}</div>
+                                <div class="text-[10px] text-gray-500">${x.village}</div>
+                            </td>
+                            <td class="p-3 font-mono text-xs text-amber-800">₹${x.slip || 0}</td>
+                            <td class="p-3 font-mono font-bold text-festiveRed">₹${x.amount}</td>
+                            <td class="p-3 text-xs"><span class="px-2 py-0.5 rounded bg-gray-100">${x.type}</span></td>
+                            <td class="p-3 text-xs text-gray-500">${x.date}</td>
+                        </tr>
+                    `).join('');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
